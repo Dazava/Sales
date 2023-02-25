@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.Shared", "Sales.Shared\Sales.Shared.csproj", "{D613B096-4061-4310-A5EF-5FB62318F5FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slaes.API", "Slaes.API\Slaes.API.csproj", "{EE9CB09E-A279-4F72-AF9F-7DA5B82C61C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.API", "Slaes.API\Sales.API.csproj", "{EE9CB09E-A279-4F72-AF9F-7DA5B82C61C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sales.WEB", "Sales.WEB\Sales.WEB.csproj", "{77B63168-BB77-4D6E-B55D-3B8ECAE11B4C}"
 EndProject
