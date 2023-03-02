@@ -17,7 +17,7 @@ namespace Sales.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Category category)
+        public async Task<ActionResult> PostAsync(Category category)
         {
             _context.Add(category);
             await _context.SaveChangesAsync();
@@ -25,9 +25,44 @@ namespace Sales.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<IActionResult> GetAsync()
         {
             return Ok(await _context.Categories.ToListAsync());
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetAsync(int id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            if (category is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(category);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> PutAsync(Category category)
+        {
+            _context.Update(category);
+            await _context.SaveChangesAsync();
+            return Ok(category);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            if (category is null)
+            {
+                return NotFound();
+            }
+            _context.Remove(category);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+
     }
 }
