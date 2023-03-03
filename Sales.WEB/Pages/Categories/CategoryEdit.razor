@@ -42,21 +42,20 @@ else
 
     private async Task Edit()
     {
-  
+
         var responseHTTP = await repository.Put("api/categories", category);
         if (responseHTTP.Error)
         {
             var mensajeError = await responseHTTP.GetErrorMessageAsync();
             await sweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            return;
         }
-        else
-        {
-            categoryForm!.FormPostedSuccessfully = true;
-            navigationManager.NavigateTo("/categories");
-        }
+
+        Return();
     }
     private void Return()
     {
+        categoryForm!.FormPostedSuccessfully = true;
         navigationManager.NavigateTo("/categories");
     }
 }

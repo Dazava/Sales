@@ -1,4 +1,4 @@
-﻿@page "/countries/create"
+﻿@page "/categories/create"
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
@@ -19,11 +19,13 @@
             await sweetAlertService.FireAsync("Error", message);
             return;
         }
-        categoryForm!.FormPostedSuccessfully = true;
-        navigationManager.NavigateTo("/categories");
+        Return();
     }
-    private void Return()
+
+
+    private void Return()   
     {
+        categoryForm!.FormPostedSuccessfully = true;
         navigationManager.NavigateTo("/categories");
     }
 }
