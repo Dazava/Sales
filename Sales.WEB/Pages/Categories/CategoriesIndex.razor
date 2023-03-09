@@ -19,8 +19,8 @@ else
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th></th>
                         <th>Categoría</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,11 +28,11 @@ else
                     {
                         <tr>
                             <td>
-                                <a href="/categories/edit/@category.Id" class="btn btn-warning">Editar</a>
-                                <button class="btn btn-danger" @onclick=@(() => DeleteAsync(category))>Borrar</button>
+                                @category.Name
                             </td>
                             <td>
-                                @category.Name
+                                <a href="/categories/edit/@category.Id" class="btn btn-warning">Editar</a>
+                                <button class="btn btn-danger" @onclick=@(() => DeleteAsync(category))>Borrar</button>
                             </td>
                         </tr>
                     }
