@@ -8,9 +8,6 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
-  <ItemGroup>
-    <Content Remove="Pages\Countries\CountriesIndex.razor" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.4.0" />
@@ -25,23 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sales.Shared\Sales.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Countries\CountriesIndex.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Countries\CountriesIndex.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Countries\CountriesIndex.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Cities\" />
-    <Folder Include="Pages\States\" />
   </ItemGroup>
 
 </Project>
