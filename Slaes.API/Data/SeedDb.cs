@@ -27,7 +27,6 @@ namespace Sales.API.Data
                 _context.Categories.Add(new Category { Name = "Bebés" });
                 _context.Categories.Add(new Category { Name = "Dama" });
                 _context.Categories.Add(new Category { Name = "Caballero" });
-                _context.Categories.Add(new Category { Name = "Dama" });
                 _context.Categories.Add(new Category { Name = "Niños" });
                 _context.Categories.Add(new Category { Name = "Niñas" });
                 _context.Categories.Add(new Category { Name = "Deporte" });
@@ -87,9 +86,14 @@ namespace Sales.API.Data
                 _context.Categories.Add(new Category { Name = "Bicicletas" });
                 _context.Categories.Add(new Category { Name = "Aire libre" });
                 _context.Categories.Add(new Category { Name = "Fotografía" });
-                _context.Categories.Add(new Category { Name = "Instrumentos de viento" });
+                _context.Categories.Add(new Category { Name = "Licencias de software" });
+                _context.Categories.Add(new Category { Name = "Puertas" });
+                _context.Categories.Add(new Category { Name = "Puertas de baño" });
+                _context.Categories.Add(new Category { Name = "Piscinas" });
+                _context.Categories.Add(new Category { Name = "Mouses" });
+                _context.Categories.Add(new Category { Name = "Teclados" });
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
         }
     }
 }

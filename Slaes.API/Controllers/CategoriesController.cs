@@ -9,44 +9,18 @@ namespace Sales.API.Controllers
 {
     [ApiController]
     [Route("/api/categories")]
-    public class CategoriesController : ControllerBase
+    public class CategoiresController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public CategoriesController(DataContext context)
+        public CategoiresController(DataContext context)
         {
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> PostAsync(Category category)
-        {
-
-            try
-            {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                return Ok(category);
-            }
-            catch (DbUpdateException dbUpdateException)
-            {
-                if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
-                {
-                    return BadRequest("Ya existe una categoría con el mismo nombre.");
-                }
-                else
-                {
-                    return BadRequest(dbUpdateException.InnerException.Message);
-                }
-            }
-            catch (Exception exception)
-            {
-                return BadRequest(exception.Message);
-            }
-        }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
+        public async Task<ActionResult> Get([FromQuery] PaginationDTO pagination)
         {
             var queryable = _context.Categories
                 .AsQueryable();
@@ -62,10 +36,12 @@ namespace Sales.API.Controllers
                 .ToListAsync());
         }
 
+
         [HttpGet("totalPages")]
         public async Task<ActionResult> GetPages([FromQuery] PaginationDTO pagination)
         {
-            var queryable = _context.Countries.AsQueryable();
+            var queryable = _context.Categories
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
@@ -77,11 +53,11 @@ namespace Sales.API.Controllers
             return Ok(totalPages);
         }
 
-
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (category is null)
             {
                 return NotFound();
@@ -90,12 +66,13 @@ namespace Sales.API.Controllers
             return Ok(category);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> PutAsync(Category category)
+
+        [HttpPost]
+        public async Task<ActionResult> Post(Category category)
         {
+            _context.Add(category);
             try
             {
-                _context.Update(category);
                 await _context.SaveChangesAsync();
                 return Ok(category);
             }
@@ -115,21 +92,45 @@ namespace Sales.API.Controllers
                 return BadRequest(exception.Message);
             }
         }
-    
+
+        [HttpPut]
+        public async Task<ActionResult> Put(Category category)
+        {
+            _context.Update(category);
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok(category);
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
+                {
+                    return BadRequest("Ya existe un registro con el mismo nombre.");
+                }
+                else
+                {
+                    return BadRequest(dbUpdateException.InnerException.Message);
+                }
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            if (category is null)
+            if (category == null)
             {
                 return NotFound();
             }
+
             _context.Remove(category);
             await _context.SaveChangesAsync();
             return NoContent();
         }
-
-
     }
 }

@@ -10,8 +10,6 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <Content Remove="Pages\Countries\CountriesIndex.razor" />
-    <Content Remove="Shared\GenericList.razor" />
-    <Content Remove="Shared\Pagination.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,19 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Shared\GenericList.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\Countries\CountriesIndex.razor" />
-    <_ContentIncludedByDefault Remove="Shared\GenericList.razor" />
-    <_ContentIncludedByDefault Remove="Shared\Pagination.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Pages\Countries\CountriesIndex.razor" />
-    <None Include="Shared\GenericList.razor" />
-    <None Include="Shared\Pagination.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,7 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Shared\Pagination.razor" />
+    <Folder Include="Pages\Cities\" />
+    <Folder Include="Pages\States\" />
   </ItemGroup>
 
 </Project>
