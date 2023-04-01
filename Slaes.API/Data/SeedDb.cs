@@ -23,8 +23,8 @@ namespace Sales.API.Data
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
-            await CheckCountriesAsync();
             await CheckCategoriesAsync();
+            await CheckCountriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Daza", "Zapata", "daza@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
 
@@ -35,6 +35,13 @@ namespace Sales.API.Data
             var user = await _userHelper.GetUserAsync(email);
             if (user == null)
             {
+                var city = await _context.Cities.FirstOrDefaultAsync(x => x.Name == "Medellín");
+                if (city == null)
+                {
+                    city = await _context.Cities.FirstOrDefaultAsync();
+                }
+
+
                 user = new User
                 {
                     FirstName = firstName,
@@ -50,6 +57,10 @@ namespace Sales.API.Data
 
                 await _userHelper.AddUserAsync(user, "123456");
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
+
             }
 
             return user;
@@ -124,6 +135,15 @@ namespace Sales.API.Data
         {
             if (!_context.Categories.Any())
             {
+                _context.Categories.Add(new Category { Name = "Deportes" });
+                _context.Categories.Add(new Category { Name = "Calzado" });
+                _context.Categories.Add(new Category { Name = "Lenceria" });
+                _context.Categories.Add(new Category { Name = "Erótica" });
+                _context.Categories.Add(new Category { Name = "Comida" });
+                _context.Categories.Add(new Category { Name = "Jugetes" });
+                _context.Categories.Add(new Category { Name = "Jardín" });
+                _context.Categories.Add(new Category { Name = "Ferreteria" });
+                _context.Categories.Add(new Category { Name = "Video Juegos" });
                 _context.Categories.Add(new Category { Name = "Lacteos" });
                 _context.Categories.Add(new Category { Name = "Cárnicos" });
                 _context.Categories.Add(new Category { Name = "Electrodomésticos" });

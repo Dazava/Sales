@@ -1,6 +1,6 @@
 ﻿@page "/categories/edit/{CategoryId:int}"
-@inject NavigationManager navigationManager
 @inject IRepository repository
+@inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
 <h3>Editar categoría</h3>
@@ -13,45 +13,50 @@ else
 {
     <CategoryForm @ref="categoryForm" Category="category" OnValidSubmit="EditAsync" ReturnAction="Return" />
 }
+
 @code {
     private Category? category;
     private CategoryForm? categoryForm;
 
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
     [Parameter]
-    public int CategoryId { get; set; } 
+    public int CategoryId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var responseHTTP = await repository.Get<Category>($"api/categories/{CategoryId}");
-        if (responseHTTP.Error)
+        var responseHttp = await repository.Get<Category>($"/api/categories/{CategoryId}");
+        if (responseHttp.Error)
         {
-            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
             {
                 navigationManager.NavigateTo("/categories");
                 return;
             }
 
-            var messageError = await responseHTTP.GetErrorMessageAsync();
-            await sweetAlertService.FireAsync("Error", messageError, SweetAlertIcon.Error);
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
             return;
         }
 
-        category = responseHTTP.Response;
+        category = responseHttp.Response;
     }
 
     private async Task EditAsync()
     {
-
-        var responseHTTP = await repository.Put("api/categories", category);
-        if (responseHTTP.Error)
+        var responseHttp = await repository.Put("/api/categories", category);
+        if (responseHttp.Error)
         {
-            var mensajeError = await responseHTTP.GetErrorMessageAsync();
-            await sweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            var message = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
             return;
         }
 
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
         Return();
     }
+
     private void Return()
     {
         categoryForm!.FormPostedSuccessfully = true;

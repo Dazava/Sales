@@ -46,12 +46,31 @@ namespace Sales.API.Helpers
         public async Task<User> GetUserAsync(string email)
         {
             var user = await _context.Users
-               .Include(u => u.City!)
-               .ThenInclude(c => c.State!)
-               .ThenInclude(s => s.Country!)
-               .FirstOrDefaultAsync(u => u.Email! == email);
+                .Include(u => u.City!)
+                .ThenInclude(c => c.State!)
+                .ThenInclude(s => s.Country!)
+                .FirstOrDefaultAsync(x => x.Email == email);
             return user!;
+        }
 
+        public async Task<User> GetUserAsync(Guid userId)
+        {
+            var user = await _context.Users
+                .Include(u => u.City!)
+                .ThenInclude(c => c.State!)
+                .ThenInclude(s => s.Country!)
+                .FirstOrDefaultAsync(x => x.Id == userId.ToString());
+            return user!;
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string currentPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
         }
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)
@@ -69,6 +88,28 @@ namespace Sales.API.Helpers
         {
             await _signInManager.SignOutAsync();
         }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(User user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(User user)
+        {
+            return await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(User user, string token, string password)
+        {
+            return await _userManager.ResetPasswordAsync(user, token, password);
+        }
+
+
 
     }
 }
