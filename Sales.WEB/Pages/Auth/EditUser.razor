@@ -139,7 +139,21 @@ else
 
     }
 
-    private async Task LoadUserAsyc()
+    private async Task ShowModal()
+    {
+        IModalReference modalReference;
+
+        modalReference =Modal.Show<ChangePassword>();
+
+        var result = await modalReference.Result;
+        if (result.Confirmed)
+        {
+            await OnInitializedAsync();
+        }
+    }
+
+
+    private async Task LoadUserAsync()
     {
         var responseHTTP = await repository.Get<User>($"/api/accounts");
         if (responseHTTP.Error)
