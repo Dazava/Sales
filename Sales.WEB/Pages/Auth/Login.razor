@@ -18,23 +18,23 @@
                     </span>
                 </div>
                 <div class="card-body">
-
-    
-                <div class="mb-3">
-                    <label>Email:</label>
-                    <div>
-                        <InputText class="form-control" @bind-Value="@loginDTO.Email" />
-                        <ValidationMessage For="@(() => loginDTO.Email)" />
+                    <div class="mb-3">
+                        <label>Email:</label>
+                        <div>
+                            <InputText class="form-control" @bind-Value="@loginDTO.Email" />
+                            <ValidationMessage For="@(() => loginDTO.Email)" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label>Contraseña:</label>
+                        <div>
+                            <InputText type="password" class="form-control" @bind-Value="@loginDTO.Password" />
+                            <ValidationMessage For="@(() => loginDTO.Password)" />
+                        </div>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label>Contraseña:</label>
-                    <div>
-                        <InputText type="password" class="form-control" @bind-Value="@loginDTO.Password" />
-                        <ValidationMessage For="@(() => loginDTO.Password)" />
-                    </div>
-                </div>
-                <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+                <div class="card-footer">
+                    <a class="bbtn btn-link" href="/ResendToken">Reenviar correro de activación de cuenta</a>
                 </div>
             </div>
         </EditForm>
